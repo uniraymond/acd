@@ -1,0 +1,2336 @@
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `failed_jobs` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `migrations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `password_resets` (
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  KEY `password_resets_email_index` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+INSERT INTO `migrations` VALUES (1,'2014_10_12_000000_create_users_table',1);
+INSERT INTO `migrations` VALUES (2,'2014_10_12_100000_create_password_resets_table',1);
+INSERT INTO `migrations` VALUES (3,'2019_08_19_000000_create_failed_jobs_table',1);
+
+# ************************************************************
+# Sequel Pro SQL dump
+# Version 4541
+#
+# http://www.sequelpro.com/
+# https://github.com/sequelpro/sequelpro
+#
+# Host: localhost (MySQL 5.7.26)
+# Database: agedcare_db
+# Generation Time: 2020-10-06 11:52:45 +0000
+# ************************************************************
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+# Dump of table acd_app_login_history
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_app_login_history` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `privacyCode` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `caseId` int(11) DEFAULT NULL,
+  `userHash` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mobileNo` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ipAddress` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_modified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`privacyCode`,`mobileNo`,`createdOn`,`userHash`,`caseId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+
+# Dump of table acd_app_users
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_app_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fbTokenId` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `iosHash` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `notificationAccess` enum('allowed','denied') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `devicePlatform` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deviceModel` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deviceId` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `userHash` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `privacyCode` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `last_params` text COLLATE utf8mb4_unicode_ci,
+  `last_push` text COLLATE utf8mb4_unicode_ci,
+  `last_endpoint` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `endpoint_response` text COLLATE utf8mb4_unicode_ci,
+  `last_query` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `active` tinyint(4) DEFAULT '1',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_modified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `userHash` (`userHash`),
+  UNIQUE KEY `UNIQUE` (`fbTokenId`,`active`),
+  UNIQUE KEY `iosHash` (`iosHash`),
+  KEY `INDEX` (`active`,`deviceModel`,`deviceId`,`privacyCode`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+DELIMITER ;;
+/*!50003 SET SESSION SQL_MODE="NO_AUTO_VALUE_ON_ZERO" */;;
+/*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `acd_app_users_before_insert` BEFORE INSERT ON `acd_app_users` FOR EACH ROW BEGIN
+	WHILE (NEW.userHash IS NULL OR NEW.userHash = '' OR EXISTS(SELECT 1 FROM acd_app_users WHERE userHash = NEW.userHash)) DO
+		SET NEW.userHash = LOWER(GenerateRandomHash(13));  
+  	END WHILE;
+END */;;
+DELIMITER ;
+/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
+
+
+# Dump of table acd_auth_groups
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_auth_groups` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `isInternalUsers` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `isPartnerUsers` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `isOperatorUsers` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `isPublicUsers` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `active` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `dateCreated` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`isInternalUsers`,`isPartnerUsers`,`isOperatorUsers`,`isPublicUsers`,`active`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+
+# Dump of table acd_auth_logins
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_auth_logins` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `login` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `time` int(11) unsigned DEFAULT NULL,
+  `dateCreated` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+
+# Dump of table acd_auth_relationships
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_auth_relationships` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned DEFAULT NULL,
+  `legacyUserId` int(11) unsigned DEFAULT NULL,
+  `group_id` mediumint(8) unsigned DEFAULT NULL,
+  `legacyGroupId` mediumint(8) unsigned DEFAULT NULL COMMENT '0=>Super Admin,1=>Case Manager,2=>Operator,3=>Provider Regular,4=>Provider View',
+  `active` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `dateCreated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uc_users_groups` (`user_id`,`group_id`),
+  KEY `fk_users_groups_users1_idx` (`user_id`),
+  KEY `fk_users_groups_groups1_idx` (`group_id`),
+  KEY `INDEX` (`legacyUserId`,`legacyGroupId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+
+# Dump of table acd_auth_users
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_auth_users` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `userHash` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `legacyUserId` int(11) unsigned DEFAULT NULL,
+  `legacyCaoId` int(11) unsigned DEFAULT NULL,
+  `legacyPsId` int(11) unsigned DEFAULT NULL,
+  `zdUserId` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `passwordReset` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `username` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `first_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `last_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mobile` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `legacyPassword` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(254) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `groupEmail` varchar(254) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `activation_selector` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `activation_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `forgotten_password_selector` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `forgotten_password_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `forgotten_password_time` int(11) unsigned DEFAULT NULL,
+  `remember_selector` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_on` int(11) unsigned DEFAULT NULL,
+  `last_login` int(11) unsigned DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '1',
+  `dateCreated` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModiified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uc_email` (`email`),
+  UNIQUE KEY `uc_activation_selector` (`activation_selector`),
+  UNIQUE KEY `uc_forgotten_password_selector` (`forgotten_password_selector`),
+  UNIQUE KEY `uc_remember_selector` (`remember_selector`),
+  UNIQUE KEY `userHash` (`userHash`),
+  KEY `INDEX` (`legacyUserId`,`passwordReset`,`active`,`password`,`legacyPassword`,`legacyCaoId`,`legacyPsId`),
+  KEY `zdUserId` (`zdUserId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+DELIMITER ;;
+/*!50003 SET SESSION SQL_MODE="NO_AUTO_VALUE_ON_ZERO" */;;
+/*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `acd_auth_users_before_insert` BEFORE INSERT ON `acd_auth_users` FOR EACH ROW BEGIN
+	WHILE (NEW.userHash IS NULL OR NEW.userHash = '' OR EXISTS(SELECT 1 FROM acd_auth_users WHERE userHash = NEW.userHash)) DO
+		SET NEW.userHash = LOWER(GenerateRandomHash(32));  
+  	END WHILE;
+END */;;
+DELIMITER ;
+/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
+
+
+# Dump of table acd_case_facilities
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_case_facilities` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `caseId` int(11) DEFAULT NULL,
+  `facilityId` int(11) DEFAULT NULL,
+  `facilityHash` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `caseFacilityHash` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `facilityName` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `legacyId` int(11) DEFAULT NULL,
+  `legacyPlacementIntroductionId` int(11) DEFAULT NULL,
+  `legacyCaseNumber` tinytext COLLATE utf8mb4_unicode_ci,
+  `showBudget` tinyint(1) NOT NULL DEFAULT '0',
+  `showLocation` tinyint(1) NOT NULL DEFAULT '0',
+  `showRoomPreferences` tinyint(1) NOT NULL DEFAULT '0',
+  `showSpecialCareNeeds` tinyint(1) NOT NULL DEFAULT '0',
+  `showOtherPreferences` tinyint(1) NOT NULL DEFAULT '0',
+  `psNotes` text COLLATE utf8mb4_unicode_ci,
+  `facilityNotes` text COLLATE utf8mb4_unicode_ci,
+  `vacancyNotes` text COLLATE utf8mb4_unicode_ci,
+  `ethnicNotes` text COLLATE utf8mb4_unicode_ci,
+  `secureDementiaNotes` text COLLATE utf8mb4_unicode_ci,
+  `statusId` tinyint(4) DEFAULT '0' COMMENT 'Linked to table acd_case_facility_status_link',
+  `statusLastUpdate` timestamp NULL DEFAULT NULL,
+  `datePoEmailSent` timestamp NULL DEFAULT NULL,
+  `isUnregisteredFacility` tinyint(1) DEFAULT '0',
+  `isShortlisted` tinyint(1) DEFAULT '0',
+  `tourBooked` tinyint(1) DEFAULT '0',
+  `tourDate` timestamp NULL DEFAULT NULL,
+  `tourStatus` enum('none','requested','accepted','facility_rescheduled','client_rescheduled','client_cancelled','facility_cancelled') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tourMessage` text COLLATE utf8mb4_unicode_ci,
+  `declinedIntroductionCategory` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `declinedIntroductionDetails` text COLLATE utf8mb4_unicode_ci,
+  `active` tinyint(1) DEFAULT '1',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX_TOURS` (`tourBooked`,`tourDate`,`tourStatus`),
+  KEY `isShortlisted` (`isShortlisted`),
+  KEY `INDEX_DATES` (`datePoEmailSent`,`statusLastUpdate`),
+  KEY `INDEX` (`caseId`,`active`,`facilityId`,`statusId`,`facilityHash`,`caseFacilityHash`,`isUnregisteredFacility`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+DELIMITER ;;
+/*!50003 SET SESSION SQL_MODE="NO_AUTO_VALUE_ON_ZERO" */;;
+/*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `acd_case_facilities_before_insert` BEFORE INSERT ON `acd_case_facilities` FOR EACH ROW BEGIN
+	WHILE (NEW.facilityHash IS NULL OR NEW.facilityHash = '' OR EXISTS(SELECT 1 FROM acd_case_facilities WHERE facilityHash = NEW.facilityHash)) DO
+		SET NEW.facilityHash = LOWER(GenerateRandomHash(32));  
+  	END WHILE;
+END */;;
+DELIMITER ;
+/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
+
+
+# Dump of table acd_case_facilities_notes
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_case_facilities_notes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `caseFacilityId` int(11) DEFAULT NULL COMMENT 'Link to ID in table acd_case_facilities',
+  `caseId` int(11) DEFAULT NULL,
+  `facilityId` int(11) DEFAULT NULL,
+  `facilityName` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `facilityNotes` text COLLATE utf8mb4_unicode_ci,
+  `active` tinyint(1) DEFAULT '1',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`caseFacilityId`,`caseId`,`facilityId`),
+  KEY `active` (`active`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+
+# Dump of table acd_case_facility_status_list
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_case_facility_status_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `statusName` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `legacyStatus` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '1' COMMENT 'Active record flag',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`active`,`legacyStatus`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+
+# Dump of table acd_case_finances
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_case_finances` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `caseId` int(11) DEFAULT NULL COMMENT 'Linked to column id in table acd_cases',
+  `ownsProperty` tinyint(1) DEFAULT '0',
+  `isHomeOwner` tinyint(1) DEFAULT '0',
+  `homeOwnershipStatus` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `homePropertyType` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `homeAddress` tinytext COLLATE utf8mb4_unicode_ci,
+  `otherResidentNone` tinyint(1) DEFAULT '0',
+  `otherResidentSpouse` tinyint(1) DEFAULT '0',
+  `otherResidentDependentChild` tinyint(1) DEFAULT '0',
+  `otherResidentNonDependentChild` tinyint(1) DEFAULT '0',
+  `otherResidentCarer` tinyint(1) DEFAULT '0',
+  `otherResidentRelative` tinyint(1) DEFAULT '0',
+  `otherResidentFamily` tinyint(1) DEFAULT '0',
+  `otherResidentPerson` tinyint(1) DEFAULT '0',
+  `estimatedHomeValue` decimal(10,2) DEFAULT NULL,
+  `otherAssets` decimal(10,2) DEFAULT NULL,
+  `otherIncome` decimal(10,2) DEFAULT NULL,
+  `superannuation` decimal(10,2) DEFAULT NULL,
+  `pensionStatus` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `financialCapacity` tinytext COLLATE utf8mb4_unicode_ci,
+  `radCapacity` tinytext COLLATE utf8mb4_unicode_ci,
+  `radCapacityAmount` decimal(10,2) DEFAULT NULL,
+  `radFundingMethod` tinytext COLLATE utf8mb4_unicode_ci,
+  `fundingType` tinytext COLLATE utf8mb4_unicode_ci COMMENT 'Options are Residential Aged Care, Private Care, Home Care Package, NDIS',
+  `centrelinkFormCompleted` tinyint(1) DEFAULT '0',
+  `centrelinkFormStatus` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '1' COMMENT 'Active record flag',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`caseId`,`active`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table acd_case_leads
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_case_leads` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `caseId` int(11) DEFAULT NULL COMMENT 'Linked to column id in table acd_case_reports',
+  `leadSource` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Eg. Inbound, Outbound',
+  `channelSource` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `channelCampaign` text COLLATE utf8mb4_unicode_ci,
+  `leadStatusCurrent` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Eg. New, Callback Requested',
+  `leadStatusPrevious` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `jsonData` json DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '1' COMMENT 'Toggle for active records',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`active`,`caseId`,`leadSource`,`channelSource`,`leadStatusCurrent`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=FIXED;
+
+
+
+# Dump of table acd_case_locations
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_case_locations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `caseId` int(11) DEFAULT NULL COMMENT 'Linked to column id in table acd_cases',
+  `suburb` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `postcode` mediumint(8) unsigned DEFAULT NULL,
+  `state` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `radius` tinyint(3) unsigned DEFAULT '10',
+  `latitude` decimal(8,6) DEFAULT NULL,
+  `longitude` decimal(9,6) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '1' COMMENT 'Active record flag',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`caseId`,`active`,`suburb`,`postcode`,`state`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+
+# Dump of table acd_case_misc
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_case_misc` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `caseId` int(11) DEFAULT NULL COMMENT 'Linked to column id in table acd_cases',
+  `tourTimeline` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `isWaitlisted` tinyint(1) DEFAULT '0',
+  `facilitiesContacted` text COLLATE utf8mb4_unicode_ci COMMENT 'JSON string of facilities contacted by client',
+  `facilitiesWaitlisted` text COLLATE utf8mb4_unicode_ci COMMENT 'JSON string of facilities client have been waitlisted',
+  `appDownload` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deviceType` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `consentGivingDetails` tinyint(1) DEFAULT '0',
+  `initialEngagementLevel` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `followUpDateTime` timestamp NULL DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '1' COMMENT 'Active record flag',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`caseId`,`active`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+
+# Dump of table acd_case_needs
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_case_needs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `caseId` int(11) DEFAULT NULL COMMENT 'Linked to column id in table acd_cases',
+  `acatAssessmentStatus` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `acatScheduledDate` date DEFAULT NULL,
+  `acaApproval` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `aca_hcp_level_1` tinyint(1) DEFAULT '0',
+  `aca_hcp_level_2` tinyint(1) DEFAULT '0',
+  `aca_hcp_level_3` tinyint(1) DEFAULT '0',
+  `aca_hcp_level_4` tinyint(1) DEFAULT '0',
+  `aca_respite_low_care` tinyint(1) DEFAULT '0',
+  `aca_respite_high_care` tinyint(1) DEFAULT '0',
+  `aca_residential_permanent` tinyint(1) DEFAULT '0',
+  `acaStatus` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mobility` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nutritions` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `continent` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cognitiveNormal` tinyint(1) DEFAULT '0',
+  `cognitiveConfusion` tinyint(1) DEFAULT '0',
+  `cognitiveDementia` tinyint(1) DEFAULT '0',
+  `cognitiveAggressive` tinyint(1) DEFAULT '0',
+  `cognitiveWandering` tinyint(1) DEFAULT '0',
+  `isReferral` tinyint(1) DEFAULT '0',
+  `referralCodeStatus` tinytext COLLATE utf8mb4_unicode_ci,
+  `referralCodeRespiteLow` tinytext COLLATE utf8mb4_unicode_ci,
+  `referralCodeRespiteHigh` tinytext COLLATE utf8mb4_unicode_ci,
+  `referralCodeRespitePerm` tinytext COLLATE utf8mb4_unicode_ci,
+  `acfiOutput` text COLLATE utf8mb4_unicode_ci,
+  `acfiAmount` tinytext COLLATE utf8mb4_unicode_ci,
+  `acfiEstimateRange` tinytext COLLATE utf8mb4_unicode_ci,
+  `acfiScore` text COLLATE utf8mb4_unicode_ci,
+  `roomSinglePrivateEnsuite` tinyint(1) DEFAULT '0',
+  `roomSingleSharedEnsuite` tinyint(1) DEFAULT '0',
+  `roomShared` tinyint(1) DEFAULT '0',
+  `roomOther` tinyint(1) DEFAULT '0',
+  `roomOtherText` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `languagePreferences` text COLLATE utf8mb4_unicode_ci COMMENT 'JSON string of preferred languages',
+  `facilityPreferences` text COLLATE utf8mb4_unicode_ci,
+  `eppClinicalNotes` text COLLATE utf8mb4_unicode_ci,
+  `active` tinyint(1) DEFAULT '1' COMMENT 'Active record flag',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`caseId`,`active`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+
+# Dump of table acd_case_notes
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_case_notes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `caseId` int(11) DEFAULT NULL COMMENT 'Linked to column id in table acd_cases',
+  `notes` text COLLATE utf8mb4_unicode_ci,
+  `noteType` tinytext COLLATE utf8mb4_unicode_ci,
+  `userId` int(11) DEFAULT NULL,
+  `zdId` int(11) DEFAULT NULL COMMENT 'Linked column id in table acd_zendesk_ticket_notes',
+  `zdNoteId` bigint(20) DEFAULT NULL COMMENT 'Linked column zdNoteId in table acd_zendesk_ticket_notes',
+  `zdTicketId` bigint(20) DEFAULT NULL COMMENT 'Linked column zdTicketId in table acd_zendesk_ticket_notes',
+  `contentHash` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '1' COMMENT 'Active record flag',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `contentHash` (`contentHash`),
+  KEY `INDEX_ZD` (`zdNoteId`,`zdTicketId`),
+  KEY `INDEX` (`caseId`,`userId`,`createdOn`,`active`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+
+# Dump of table acd_case_pwcd
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_case_pwcd` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `caseId` int(11) DEFAULT NULL COMMENT 'Linked to column id in table acd_case_reports',
+  `facilityType` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `otherFacilityReason` text COLLATE utf8mb4_unicode_ci,
+  `facilityId` int(11) DEFAULT NULL,
+  `facilityName` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `admissionDate` date DEFAULT NULL,
+  `respiteStartDate` date DEFAULT NULL,
+  `respiteEndDate` date DEFAULT NULL,
+  `confirmedBy` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `admissionType` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `otherPwcdComments` text COLLATE utf8mb4_unicode_ci,
+  `isCancelled` tinyint(1) DEFAULT '0' COMMENT 'Boolean',
+  `cancellationDate` date DEFAULT NULL,
+  `cancellationReason` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `otherCancellationReason` tinytext COLLATE utf8mb4_unicode_ci,
+  `oldAdmissionDate` date DEFAULT NULL,
+  `oldAdmissionType` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `changeReason` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `readyForInvoice` tinyint(1) DEFAULT '0' COMMENT 'Boolean',
+  `readyForInvoiceDate` date DEFAULT NULL,
+  `invoicingNotes` tinytext COLLATE utf8mb4_unicode_ci,
+  `shortTermRebate` tinyint(1) DEFAULT '0' COMMENT 'Discount for Short term Rebate',
+  `nonActiveFacility` tinyint(1) DEFAULT '0' COMMENT 'Discount for Non Active Facility',
+  `invoiceRaised` tinyint(1) DEFAULT '0' COMMENT 'Boolean',
+  `invoiceDate` date DEFAULT NULL,
+  `invoiceId` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `invoiceNo` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `invoiceAmount` decimal(10,2) DEFAULT NULL,
+  `userId` int(11) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '1' COMMENT 'Toggle for active records',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX_CHANGES` (`cancellationReason`,`changeReason`),
+  KEY `INDEX` (`caseId`,`facilityId`,`isCancelled`,`active`,`invoiceRaised`,`admissionType`,`facilityType`,`admissionDate`,`readyForInvoice`),
+  KEY `INDEX_INVOICE` (`invoiceDate`,`invoiceId`,`invoiceNo`,`userId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+
+# Dump of table acd_case_report_options
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_case_report_options` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `caseId` int(11) DEFAULT NULL COMMENT 'Linked to column id in table acd_cases',
+  `reportIntroText` text COLLATE utf8mb4_unicode_ci,
+  `reportNextStepText` text COLLATE utf8mb4_unicode_ci,
+  `showReferral` tinyint(1) DEFAULT '0',
+  `displayRad` tinyint(1) DEFAULT '0',
+  `isDementiaFriendly` tinyint(1) DEFAULT '0',
+  `isSecureDementia` tinyint(1) DEFAULT '0',
+  `isPartialSupported` tinyint(1) DEFAULT '0',
+  `active` tinyint(1) DEFAULT '1' COMMENT 'Active record flag',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`caseId`,`createdOn`,`active`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+
+# Dump of table acd_case_residents
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_case_residents` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `caseId` int(11) DEFAULT NULL COMMENT 'Linked to column id in table acd_cases',
+  `primary` tinyint(1) DEFAULT '0' COMMENT 'Flag for primary resident',
+  `firstName` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lastName` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dob` date DEFAULT NULL,
+  `currentLocation` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `hospitalName` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'NULL unless current location is HOSPITAL',
+  `estimatedDischargeDate` date DEFAULT NULL,
+  `powerOfAttorney` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `powerOfAttorneyName` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `legacy_Dob` tinytext COLLATE utf8mb4_unicode_ci,
+  `legacy_currentLocation` tinytext COLLATE utf8mb4_unicode_ci,
+  `active` tinyint(1) DEFAULT '1' COMMENT 'Active record flag',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`caseId`,`primary`,`firstName`,`lastName`,`active`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+
+# Dump of table acd_case_status_history
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_case_status_history` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `caseId` int(11) NOT NULL COMMENT 'Linked to table acd_cases',
+  `lastActiveStatusId` tinyint(4) DEFAULT NULL,
+  `lastActiveStatus` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lastCaseStatus` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `activeStatusId` tinyint(4) DEFAULT NULL COMMENT 'Linked to table acd_case_status_list',
+  `activeStatus` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `caseStatus` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'On-going, Lost, Won',
+  `userId` int(11) NOT NULL COMMENT 'Linked to table acd_auth_users',
+  `facilityId` int(11) DEFAULT NULL COMMENT 'Linked to table acd_facility_listing',
+  `user` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category` tinytext COLLATE utf8mb4_unicode_ci,
+  `comment` text COLLATE utf8mb4_unicode_ci,
+  `active` tinyint(4) NOT NULL DEFAULT '1',
+  `createdOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `facilityId` (`facilityId`),
+  KEY `INDEX` (`caseId`,`activeStatusId`,`activeStatus`,`userId`,`active`,`createdOn`,`caseStatus`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table acd_case_status_list
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_case_status_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `statusName` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `zdStatusName` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '1' COMMENT 'Active record flag',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`active`,`zdStatusName`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table acd_case_users
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_case_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `caseId` int(11) DEFAULT NULL COMMENT 'Linked to column id in table acd_cases',
+  `primary` tinyint(1) DEFAULT '0' COMMENT 'Flag for primary contact',
+  `firstName` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lastName` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `relationship` tinytext COLLATE utf8mb4_unicode_ci COMMENT 'Relationship to main resident',
+  `mobile` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bestContactMethod` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bestContactTime` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `legacy_BestContactTime` text COLLATE utf8mb4_unicode_ci,
+  `legacy_Phone` text COLLATE utf8mb4_unicode_ci,
+  `active` tinyint(1) DEFAULT '1' COMMENT 'Active record flag',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`caseId`,`primary`,`firstName`,`lastName`,`mobile`,`email`,`active`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+
+# Dump of table acd_cases
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_cases` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `linkedCaseId` int(11) DEFAULT NULL COMMENT 'For cloned cases',
+  `caseReference` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `caseHash` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `privacyCode` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `legacyPlacementId` int(11) DEFAULT NULL,
+  `zendeskNo` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Legacy Case Number',
+  `caoId` int(11) DEFAULT NULL COMMENT 'Care Assessment Officer ID',
+  `psId` int(11) DEFAULT NULL COMMENT 'Placement Specialist ID',
+  `eppId` int(11) DEFAULT NULL,
+  `placementType` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `placementTimeline` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `eppPlacementTimeline` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `updatedPlacementTimeline` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `timelineDrivers` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `locationDrivers` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `placementEstimatedDate` timestamp NULL DEFAULT NULL,
+  `keyConcerns` text COLLATE utf8mb4_unicode_ci,
+  `keyPriorities` text COLLATE utf8mb4_unicode_ci,
+  `statusId` tinyint(2) DEFAULT '1' COMMENT 'Link to id in table acd_case_status_list',
+  `caseStatus` enum('On-going','Won','Lost') COLLATE utf8mb4_unicode_ci DEFAULT 'On-going',
+  `lostCategory` tinytext COLLATE utf8mb4_unicode_ci,
+  `lostComment` text COLLATE utf8mb4_unicode_ci,
+  `lostPlacedWithFacility` int(11) DEFAULT NULL COMMENT 'Link to facilityId in table acd_facility_listing',
+  `caseSummary` text COLLATE utf8mb4_unicode_ci,
+  `invoiceNumbers` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `invoiceAmount` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `invoiceDates` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `isPsReferral` tinyint(1) DEFAULT '0',
+  `isClosePropSolution` tinyint(1) DEFAULT '0',
+  `isDoNotContact` tinyint(1) DEFAULT '0' COMMENT 'Do not contact',
+  `isFinalized` tinyint(1) DEFAULT '1',
+  `isCloseCase` tinyint(1) DEFAULT '0',
+  `zdStatus` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `checkPlacementStatus` tinyint(1) DEFAULT '0' COMMENT 'Flag to prompt client for placement status',
+  `lastPlacementCheckDate` date DEFAULT NULL COMMENT 'Date of last placement check',
+  `isEppLead` tinyint(4) DEFAULT '0',
+  `eppSubmissionType` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Basic or Complete',
+  `eppCaseId` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `eppClosedDate` date DEFAULT NULL,
+  `isCarerGatewayCase` tinyint(1) DEFAULT '0',
+  `carerGatewayId` int(11) DEFAULT NULL COMMENT 'Link to id in table acd_cases_carergateway',
+  `active` tinyint(1) DEFAULT '1' COMMENT 'Active record flag',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `caseReference` (`caseReference`),
+  UNIQUE KEY `caseHash` (`caseHash`),
+  UNIQUE KEY `privacyCode` (`privacyCode`),
+  KEY `zendeskNo` (`zendeskNo`),
+  KEY `isCloseCase` (`isCloseCase`),
+  KEY `legacyPlacementId` (`legacyPlacementId`),
+  KEY `INDEX_CG` (`isCarerGatewayCase`,`carerGatewayId`),
+  KEY `INDEX` (`caoId`,`psId`,`active`,`statusId`,`isFinalized`,`caseStatus`,`invoiceNumbers`,`isDoNotContact`,`isEppLead`,`eppId`,`eppSubmissionType`,`linkedCaseId`),
+  KEY `INDEX_DATE` (`createdOn`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+DELIMITER ;;
+/*!50003 SET SESSION SQL_MODE="NO_AUTO_VALUE_ON_ZERO" */;;
+/*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `acd_cases_before_insert` BEFORE INSERT ON `acd_cases` FOR EACH ROW BEGIN
+	WHILE (NEW.caseHash IS NULL OR NEW.caseHash = '' OR EXISTS(SELECT 1 FROM acd_cases WHERE caseHash = NEW.caseHash)) DO
+		SET NEW.caseHash = LOWER(GenerateRandomHash(32));  
+  	END WHILE;
+
+	WHILE (NEW.privacyCode IS NULL OR NEW.privacyCode = '' OR EXISTS(SELECT 1 FROM acd_cases WHERE privacyCode = NEW.privacyCode)) DO
+		SET NEW.privacyCode = GenerateRandomHash(6);  
+  	END WHILE;
+END */;;
+DELIMITER ;
+/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
+
+
+# Dump of table acd_cases_agents
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_cases_agents` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `caseId` int(11) DEFAULT NULL,
+  `userId` int(11) DEFAULT NULL,
+  `isActiveCase` tinyint(4) NOT NULL DEFAULT '1',
+  `pwcdId` int(11) DEFAULT NULL,
+  `pwcdCreatedOn` int(11) DEFAULT NULL,
+  `isActivePwcd` tinyint(4) DEFAULT NULL,
+  `active` tinyint(4) DEFAULT '1',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX_PWCD` (`pwcdId`,`pwcdCreatedOn`,`isActivePwcd`),
+  KEY `INDEX_CASE` (`caseId`,`userId`,`isActiveCase`,`active`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table acd_cases_carergateway
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_cases_carergateway` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rdp` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `rdp_id` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `participant_id` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `support_worker_name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `support_worker_number` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `support_worker_email` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `referral_date` timestamp NULL DEFAULT NULL,
+  `cg_notes` text COLLATE utf8mb4_unicode_ci,
+  `active` tinyint(4) DEFAULT '1',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`rdp_id`,`active`,`support_worker_name`,`support_worker_number`,`support_worker_email`,`referral_date`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table acd_ept_hospital_listing
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_ept_hospital_listing` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `hospital_name` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contact_person` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci,
+  `suburb` text COLLATE utf8mb4_unicode_ci,
+  `state` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `postcode` text COLLATE utf8mb4_unicode_ci,
+  `active` tinyint(1) DEFAULT '1',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uuid` (`uuid`),
+  KEY `hospital_name` (`hospital_name`),
+  KEY `state` (`state`),
+  KEY `active` (`active`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+DELIMITER ;;
+/*!50003 SET SESSION SQL_MODE="NO_AUTO_VALUE_ON_ZERO" */;;
+/*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `acd_ept_hospital_listing_before_insert` BEFORE INSERT ON `acd_ept_hospital_listing` FOR EACH ROW BEGIN
+	WHILE (NEW.uuid IS NULL OR NEW.uuid = '' OR EXISTS(SELECT 1 FROM acd_ept_hospital_listing WHERE uuid = NEW.uuid)) DO
+		SET NEW.uuid = LOWER(GenerateRandomHash(32));  
+  	END WHILE;
+END */;;
+DELIMITER ;
+/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
+
+
+# Dump of table acd_ept_users
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_ept_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `hospitalId` int(11) DEFAULT NULL,
+  `userId` int(11) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '1',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQUE` (`userId`,`hospitalId`),
+  KEY `INDEX` (`hospitalId`,`userId`,`active`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Table containing facilities.';
+
+
+
+# Dump of table acd_facility_features
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_facility_features` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `facilityId` int(11) DEFAULT NULL,
+  `facilityName` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `privateEnsuiteRadMin` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `privateEnsuiteRadMax` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sharedEnsuiteRadMin` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sharedEnsuiteRadMax` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sharedRadMin` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sharedRadMax` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `privateRespiteMin` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `privateRespiteMax` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `totalBeds` tinytext COLLATE utf8mb4_unicode_ci,
+  `bedDescription` tinytext COLLATE utf8mb4_unicode_ci,
+  `vacancyUpdate` tinytext COLLATE utf8mb4_unicode_ci,
+  `vacancyNotes` text COLLATE utf8mb4_unicode_ci,
+  `ethnicInfo` tinytext COLLATE utf8mb4_unicode_ci,
+  `ethnicText` text COLLATE utf8mb4_unicode_ci COMMENT 'DO NOT USE',
+  `ethnic` tinyint(1) DEFAULT '0',
+  `specialistServices` tinyint(1) DEFAULT '0',
+  `highCare` tinyint(1) DEFAULT '0',
+  `lowCare` tinyint(1) DEFAULT '0',
+  `dementia` tinyint(1) DEFAULT '0',
+  `secureDementia` tinyint(1) DEFAULT '0',
+  `concessional` tinyint(1) DEFAULT '0',
+  `radOnly` tinyint(1) DEFAULT '0',
+  `respite` tinyint(1) DEFAULT '0',
+  `petsAllowed` tinyint(1) DEFAULT '0',
+  `palliative` tinyint(1) DEFAULT '0',
+  `couplesRoom` tinyint(1) DEFAULT '0',
+  `privateEnsuiteAvailable` tinyint(1) DEFAULT '0',
+  `sharedEnsuiteAvailable` tinyint(1) DEFAULT '0',
+  `sharedAvailable` tinyint(1) DEFAULT '0',
+  `privateRespiteAvailable` tinyint(1) DEFAULT '0',
+  `secureGarden` tinyint(1) DEFAULT '0',
+  `cafe` tinyint(1) DEFAULT '0',
+  `hairdressing` tinyint(1) DEFAULT '0',
+  `petsOnPremise` tinyint(1) DEFAULT '0',
+  `smokingAllowed` tinyint(1) DEFAULT '0',
+  `chapel` tinyint(1) DEFAULT '0',
+  `shortTermNdis` tinyint(1) DEFAULT '0',
+  `vacancySingle` tinyint(1) DEFAULT '0',
+  `vacancyShared` tinyint(1) DEFAULT '0',
+  `vacancyRespite` tinyint(1) DEFAULT '0',
+  `vacancySecureDementia` tinyint(1) DEFAULT '0',
+  `vacancySupported` tinyint(1) DEFAULT '0',
+  `vacancyRad` tinyint(1) DEFAULT '0',
+  `vacancyEmergencyRespite` tinyint(1) DEFAULT '0',
+  `cgOnly` tinyint(1) DEFAULT '0' COMMENT 'Carer Gateway facility only',
+  `active` tinyint(1) DEFAULT '1' COMMENT 'Renamed to prevent collision with table acd_facility_listing',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `TOGGLE-1` (`highCare`,`lowCare`,`dementia`,`secureDementia`,`concessional`,`radOnly`,`respite`,`petsAllowed`,`palliative`,`couplesRoom`,`ethnic`,`specialistServices`),
+  KEY `facilityId` (`facilityId`),
+  KEY `INDEX_VALUES` (`privateEnsuiteRadMin`,`privateEnsuiteRadMax`,`sharedEnsuiteRadMin`,`sharedEnsuiteRadMax`,`sharedRadMin`,`sharedRadMax`,`privateRespiteMin`,`privateRespiteMax`),
+  KEY `TOGGLE-2` (`privateEnsuiteAvailable`,`sharedEnsuiteAvailable`,`sharedAvailable`,`privateRespiteAvailable`,`secureGarden`,`cafe`,`hairdressing`,`petsOnPremise`,`smokingAllowed`,`chapel`,`shortTermNdis`),
+  KEY `TOGGLE-3` (`vacancySingle`,`vacancyShared`,`vacancyRespite`,`vacancySecureDementia`,`vacancySupported`,`vacancyRad`,`active`,`vacancyEmergencyRespite`,`cgOnly`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Table containing facilities.';
+
+
+
+# Dump of table acd_facility_listing
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_facility_listing` (
+  `facilityId` int(11) NOT NULL AUTO_INCREMENT,
+  `facilityHash` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `providerId` int(11) DEFAULT NULL,
+  `legacyFacilityId` int(11) DEFAULT NULL COMMENT 'placement_recipient_id in legacy tbl_placement_recipient table',
+  `legacyBusinessId` int(11) DEFAULT NULL COMMENT 'business_id in legacy tbl_placement_recipient table',
+  `legacyProviderId` int(11) DEFAULT NULL COMMENT 'operator_id in legacy tbl_placement_recipient table',
+  `btsAvailable` tinyint(1) DEFAULT '0' COMMENT 'Boolean flag for BTS',
+  `acpProviderId` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'ACP Provider ID',
+  `acpFacilityId` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'ACP Facility ID',
+  `facilityName` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `urlFriendlyFacilityName` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `facilityInfo` text COLLATE utf8mb4_unicode_ci,
+  `providerName` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address1` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address2` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `suburb` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `state` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `postcode` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `country` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT 'Australia',
+  `facilityWebsite` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `facilityPhone` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contactFirstName` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contactLastName` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contactPhone` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contactEmail` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `afterHoursContactFirstName` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'For emergency respite',
+  `afterHoursContactLastName` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'For emergency respite',
+  `afterHoursNumber` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'For emergency respite',
+  `afterHoursEmail` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'For emergency respite',
+  `infoWebsite` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `latitude` double DEFAULT NULL,
+  `longitude` double DEFAULT NULL,
+  `statusId` tinyint(1) DEFAULT '1' COMMENT 'Linked to table acd_facility_status_list',
+  `poInviteStatus` enum('PI Invite Sent','Declined','Accepted') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `poInviteStatusLastUpdate` timestamp NULL DEFAULT NULL,
+  `poInviteEmailVerified` tinyint(1) DEFAULT '0',
+  `active` tinyint(1) DEFAULT '1',
+  `acceptReferral` tinyint(1) DEFAULT '1',
+  `lastStatusUpdate` timestamp NULL DEFAULT NULL,
+  `isLockdown` tinyint(1) DEFAULT '0',
+  `lockdownDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`facilityId`),
+  KEY `INDEX_LEGACY` (`legacyFacilityId`,`legacyBusinessId`,`legacyProviderId`),
+  KEY `INDEX_MAIN` (`facilityHash`,`active`,`acceptReferral`,`providerId`,`isLockdown`,`lastStatusUpdate`,`poInviteStatus`),
+  KEY `INDEX_BTS` (`btsAvailable`,`acpProviderId`,`acpFacilityId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Table containing facilities.';
+
+
+DELIMITER ;;
+/*!50003 SET SESSION SQL_MODE="NO_AUTO_VALUE_ON_ZERO" */;;
+/*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `acd_facility_listing_before_insert` BEFORE INSERT ON `acd_facility_listing` FOR EACH ROW BEGIN
+	WHILE (NEW.facilityHash IS NULL OR NEW.facilityHash = '' OR EXISTS(SELECT 1 FROM acd_facility_listing WHERE facilityHash = NEW.facilityHash)) DO
+		SET NEW.facilityHash = LOWER(GenerateRandomHash(32));  
+  	END WHILE;
+END */;;
+DELIMITER ;
+/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
+
+
+# Dump of table acd_facility_listing_temporary
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_facility_listing_temporary` (
+  `facilityId` int(11) NOT NULL AUTO_INCREMENT,
+  `providerId` int(11) DEFAULT NULL,
+  `facilityName` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `urlFriendlyFacilityName` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `facilityInfo` text COLLATE utf8mb4_unicode_ci,
+  `providerName` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address1` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address2` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `suburb` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `state` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contactEmail` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `statusId` tinyint(1) DEFAULT '1' COMMENT 'Linked to table acd_facility_status_list',
+  `active` tinyint(1) DEFAULT '1',
+  `acceptReferral` tinyint(1) DEFAULT '1',
+  `updateRequired` tinyint(4) DEFAULT NULL,
+  `updateDescription` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `validateEmail` tinyint(4) DEFAULT NULL,
+  `validateAddress` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`facilityId`),
+  KEY `INDEX_MAIN` (`active`,`acceptReferral`,`providerId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Table containing facilities.';
+
+
+
+# Dump of table acd_facility_notes
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_facility_notes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `facilityId` int(11) DEFAULT NULL,
+  `facilityName` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `noteContent` text COLLATE utf8mb4_unicode_ci,
+  `noteType` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Options : "Vacancy Updates" or "Notes"',
+  `addedBy` int(11) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '1',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`facilityId`,`addedBy`,`active`,`noteType`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Table containing facility notes';
+
+
+
+# Dump of table acd_facility_status_list
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_facility_status_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `priority` tinyint(4) DEFAULT NULL,
+  `statusName` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '1' COMMENT 'Active record flag',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`active`,`priority`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+
+# Dump of table acd_facility_users
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_facility_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `facilityId` int(11) DEFAULT NULL,
+  `providerId` int(11) DEFAULT NULL,
+  `userId` int(11) DEFAULT NULL,
+  `groupId` int(11) DEFAULT NULL COMMENT 'Linked to acd_auth_groups',
+  `legacyUserId` int(11) DEFAULT NULL COMMENT 'Column user_id on table tbl_cdusers_relationship',
+  `legacyFacilityId` int(11) DEFAULT NULL COMMENT 'Column operator_id on table tbl_cdusers_relationship',
+  `legacyProviderId` int(11) DEFAULT NULL,
+  `receivePiAlertEmail` tinyint(1) DEFAULT '1',
+  `receiveTourEmail` tinyint(1) DEFAULT '1',
+  `receiveMessageEmail` tinyint(1) DEFAULT '1',
+  `active` tinyint(1) DEFAULT '1',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQUE` (`userId`,`facilityId`,`active`),
+  KEY `INDEX_EMAIL` (`receivePiAlertEmail`,`receiveTourEmail`,`receiveMessageEmail`),
+  KEY `INDEX_LEGACY` (`legacyUserId`,`legacyFacilityId`,`legacyProviderId`),
+  KEY `INDEX` (`facilityId`,`userId`,`active`,`groupId`,`providerId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Table containing facilities.';
+
+
+
+# Dump of table acd_hospital_listing
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_hospital_listing` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `hospital_name` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `establishment_id` text COLLATE utf8mb4_unicode_ci,
+  `medicare_provider_no` text COLLATE utf8mb4_unicode_ci,
+  `local_hospital_network_identifier` int(11) DEFAULT NULL,
+  `local_hospital_network` text COLLATE utf8mb4_unicode_ci,
+  `address` text COLLATE utf8mb4_unicode_ci,
+  `suburb` text COLLATE utf8mb4_unicode_ci,
+  `state` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `postcode` text COLLATE utf8mb4_unicode_ci,
+  `asgc_ra` int(11) DEFAULT NULL,
+  `remoteness_area` text COLLATE utf8mb4_unicode_ci,
+  `available_beds` double DEFAULT NULL,
+  `peer_group_code` text COLLATE utf8mb4_unicode_ci,
+  `peer_group_name` text COLLATE utf8mb4_unicode_ci,
+  `data_for_NPHED` text COLLATE utf8mb4_unicode_ci,
+  `data_for_NHMD` text COLLATE utf8mb4_unicode_ci,
+  `data_for_NAPEDCD` text COLLATE utf8mb4_unicode_ci,
+  `data_for_ESWT` text COLLATE utf8mb4_unicode_ci,
+  `data_for_NNAPCD` text COLLATE utf8mb4_unicode_ci,
+  `funding_designation_IHPA` text COLLATE utf8mb4_unicode_ci,
+  `active` tinyint(1) DEFAULT '1',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `hospital_name` (`hospital_name`),
+  KEY `state` (`state`),
+  KEY `active` (`active`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table acd_message_contents
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_message_contents` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `messageId` int(11) DEFAULT NULL COMMENT 'Link to ID in table acd_message_list',
+  `privacyCode` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `messageType` enum('from','to') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'from: Sent by Client | to: Sent by PS or Facility',
+  `messageContent` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  `lastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`messageId`,`privacyCode`,`createdOn`,`active`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+
+# Dump of table acd_message_list
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_message_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `messageHash` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `privacyCode` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `facilityId` int(11) DEFAULT NULL,
+  `legacyFacilityId` int(11) DEFAULT NULL,
+  `psId` int(11) DEFAULT NULL,
+  `legacyPsId` int(11) DEFAULT NULL,
+  `clientName` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Client Name',
+  `recipientName` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'PS or Facility Name',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `viewedByClient` tinyint(4) DEFAULT '0' COMMENT 'Viewed by Client',
+  `viewedByRecipient` tinyint(4) DEFAULT '0' COMMENT 'Viewed by PS or Facility',
+  `active` tinyint(4) DEFAULT '1',
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX_VIEWED` (`viewedByClient`,`viewedByRecipient`),
+  KEY `INDEX` (`messageHash`,`privacyCode`,`psId`,`active`,`facilityId`,`legacyFacilityId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+DELIMITER ;;
+/*!50003 SET SESSION SQL_MODE="NO_AUTO_VALUE_ON_ZERO" */;;
+/*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `acd_message_list_before_insert` BEFORE INSERT ON `acd_message_list` FOR EACH ROW BEGIN
+	WHILE (NEW.messageHash IS NULL OR NEW.messageHash = '' OR EXISTS(SELECT 1 FROM acd_message_list WHERE messageHash = NEW.messageHash)) DO
+		SET NEW.messageHash = LOWER(GenerateRandomHash(32));  
+  	END WHILE;
+END */;;
+DELIMITER ;
+/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
+
+
+# Dump of table acd_provider_listing
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_provider_listing` (
+  `providerId` int(11) NOT NULL AUTO_INCREMENT,
+  `providerHash` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `legacyProviderId` int(11) DEFAULT NULL,
+  `legacyBusinessId` int(11) DEFAULT NULL,
+  `apiEnabled` tinyint(1) DEFAULT '0',
+  `apiLastModified` timestamp NULL DEFAULT NULL,
+  `legacyProviderName` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `providerName` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `providerSlug` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `metaTitle` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `metaDesc` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `metaKeywords` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `website` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fax` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contactTitle` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contactFirstName` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contactLastName` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contactPhone` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contactEmail` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address1` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address2` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `suburb` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `state` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `postcode` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `country` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT 'Australia',
+  `active` tinyint(1) DEFAULT '1',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`providerId`),
+  UNIQUE KEY `providerHash` (`providerHash`),
+  KEY `INDEX_LEGACY` (`legacyBusinessId`,`legacyProviderId`),
+  KEY `INDEX_ADDRESS` (`suburb`,`state`,`postcode`),
+  KEY `INDEX_CONTACT` (`phone`,`email`,`contactPhone`,`contactEmail`),
+  KEY `INDEX_MAIN` (`providerHash`,`active`),
+  KEY `INDEX_API` (`apiEnabled`,`apiLastModified`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+DELIMITER ;;
+/*!50003 SET SESSION SQL_MODE="NO_AUTO_VALUE_ON_ZERO" */;;
+/*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `acd_provider_listing_before_insert` BEFORE INSERT ON `acd_provider_listing` FOR EACH ROW BEGIN
+	WHILE (NEW.providerHash IS NULL OR NEW.providerHash = '' OR EXISTS(SELECT 1 FROM acd_provider_listing WHERE providerHash = NEW.providerHash)) DO
+		SET NEW.providerHash = LOWER(GenerateRandomHash(32));  
+  	END WHILE;
+END */;;
+DELIMITER ;
+/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
+
+
+# Dump of table acd_pwcd_admission_type_list
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_pwcd_admission_type_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `admissionType` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pwcdValue` tinyint(2) NOT NULL DEFAULT '1',
+  `sortOrder` tinyint(2) NOT NULL DEFAULT '1',
+  `active` tinyint(4) NOT NULL DEFAULT '1',
+  `createdOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`admissionType`,`pwcdValue`,`active`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table acd_user_nct
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_user_nct` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) DEFAULT NULL,
+  `targetDate` date DEFAULT NULL,
+  `targetDay` enum('Mon','Tue','Wed','Thu','Fri','Sat','Sun') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `targetMonth` enum('January','February','March','April','May','June','July','August','September','October','November','December') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `targetYear` year(4) DEFAULT NULL,
+  `kpiMultiplier` decimal(3,2) DEFAULT '1.00',
+  `hours` decimal(10,1) DEFAULT NULL,
+  `kpiValue` tinyint(4) DEFAULT '0',
+  `active` tinyint(1) DEFAULT '1',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQUE_USER` (`userId`,`targetDate`,`targetDay`,`targetMonth`,`targetYear`,`active`),
+  KEY `INDEX_USER` (`userId`,`active`),
+  KEY `INDEX_DATES` (`targetDate`,`targetDay`,`targetMonth`,`targetYear`),
+  KEY `INDEX_KPI` (`kpiMultiplier`,`hours`,`kpiValue`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table acd_user_nct_logs
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_user_nct_logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nctId` int(11) NOT NULL,
+  `logData` text COLLATE utf8mb4_unicode_ci,
+  `userId` int(11) NOT NULL,
+  `active` tinyint(4) NOT NULL DEFAULT '1',
+  `createdOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`nctId`,`active`,`userId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+
+# Dump of table acd_user_nct_multiplier
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_user_nct_multiplier` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `targetDate` date DEFAULT NULL,
+  `targetMonth` enum('January','February','March','April','May','June','July','August','September','October','November','December') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `targetYear` year(4) DEFAULT NULL,
+  `kpiMultiplier` decimal(10,2) DEFAULT '1.00',
+  `active` tinyint(1) DEFAULT '1',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQUE_DATE` (`targetMonth`,`targetYear`,`active`,`targetDate`),
+  KEY `INDEX_DATE` (`targetMonth`,`targetYear`,`active`,`targetDate`,`kpiMultiplier`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table acd_user_pwcd_target_logs
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_user_pwcd_target_logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pwcdId` int(11) NOT NULL,
+  `psId` int(11) NOT NULL,
+  `logData` tinytext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `userId` int(11) NOT NULL,
+  `active` tinyint(4) NOT NULL DEFAULT '1',
+  `createdOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`pwcdId`,`active`,`psId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table acd_user_pwcd_targets
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_user_pwcd_targets` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) DEFAULT NULL,
+  `targetMonth` enum('January','February','March','April','May','June','July','August','September','October','November','December') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `targetYear` year(4) DEFAULT NULL,
+  `targetPwcd` tinyint(4) DEFAULT '0',
+  `midwayTarget` tinyint(4) DEFAULT '0',
+  `midwayDate` date DEFAULT NULL,
+  `weeklyCaseTarget` tinyint(4) DEFAULT '0',
+  `active` tinyint(4) DEFAULT '1',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQUE` (`userId`,`targetMonth`,`targetYear`,`active`),
+  KEY `INDEX` (`userId`,`targetMonth`,`targetYear`,`active`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table acd_user_task_status_list
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_user_task_status_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `priority` tinyint(4) DEFAULT NULL,
+  `statusName` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '1' COMMENT 'Active record flag',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`active`,`priority`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+
+# Dump of table acd_user_tasks
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_user_tasks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `caseId` int(11) DEFAULT NULL COMMENT 'Optional if linked to a case',
+  `facilityId` int(11) DEFAULT NULL COMMENT 'Optional if linked to a facility',
+  `taskHash` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `assignedBy` int(5) DEFAULT NULL COMMENT 'User ID of user who created the task',
+  `assignedTo` int(5) DEFAULT NULL COMMENT 'User ID of user who is assigned the task',
+  `title` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `taskType` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `taskPriority` tinyint(1) DEFAULT '1' COMMENT '1: High, 2: Medium & 3: Low',
+  `dateDue` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `taskStatusId` tinyint(2) DEFAULT '1' COMMENT 'Link to table acd_user_task_status_list',
+  `active` tinyint(1) DEFAULT '1' COMMENT 'Active record flag',
+  `createdOn` timestamp NULL DEFAULT NULL,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`caseId`,`facilityId`,`taskHash`,`assignedBy`,`assignedTo`,`taskType`,`taskPriority`,`dateDue`,`active`,`taskStatusId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+DELIMITER ;;
+/*!50003 SET SESSION SQL_MODE="NO_AUTO_VALUE_ON_ZERO" */;;
+/*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `acd_user_tasks_before_insert` BEFORE INSERT ON `acd_user_tasks` FOR EACH ROW BEGIN
+	WHILE (NEW.taskHash IS NULL OR NEW.taskHash = '' OR EXISTS(SELECT 1 FROM acd_user_tasks WHERE taskHash = NEW.taskHash)) DO
+		SET NEW.taskHash = LOWER(GenerateRandomHash(32));  
+  	END WHILE;
+END */;;
+DELIMITER ;
+/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
+
+
+# Dump of table acd_web_api_query_logs
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_web_api_query_logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `providerId` int(11) DEFAULT NULL COMMENT 'record the provider has been queried',
+  `providerHash` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'record the provider has been queried',
+  `ipaddress` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'record the query ip address',
+  `caseId` int(11) DEFAULT NULL COMMENT 'record the case has been queried',
+  `facilityId` int(11) DEFAULT NULL COMMENT 'record the facility has been queried',
+  `queryUrl` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'record the api url has been queried',
+  `queryStatus` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'record the api url has been queried',
+  `queryStatusCode` smallint(3) DEFAULT NULL COMMENT 'record the query response code',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`providerId`,`providerHash`,`ipaddress`,`caseId`,`facilityId`,`queryStatusCode`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=FIXED;
+
+
+
+# Dump of table acd_zendesk_tickets_filtered
+# ------------------------------------------------------------
+
+CREATE TABLE `acd_zendesk_tickets_filtered` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ticketNo` int(11) DEFAULT NULL,
+  `privacyCode` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `createdOn` tinytext COLLATE utf8mb4_unicode_ci,
+  `subject` tinytext COLLATE utf8mb4_unicode_ci,
+  `tags` tinytext COLLATE utf8mb4_unicode_ci,
+  `status` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `submitter` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `submitterId` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `submissionDate` tinytext COLLATE utf8mb4_unicode_ci,
+  `assignee` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `assigneeId` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `requester` tinytext COLLATE utf8mb4_unicode_ci,
+  `requesterId` tinytext COLLATE utf8mb4_unicode_ci,
+  `requesterEmail` tinytext COLLATE utf8mb4_unicode_ci,
+  `requesterPhone` tinytext COLLATE utf8mb4_unicode_ci,
+  `clientFirstname` tinytext COLLATE utf8mb4_unicode_ci,
+  `clientLastname` tinytext COLLATE utf8mb4_unicode_ci,
+  `email` tinytext COLLATE utf8mb4_unicode_ci,
+  `residentFullname` tinytext COLLATE utf8mb4_unicode_ci,
+  `nextFuDate` tinytext COLLATE utf8mb4_unicode_ci,
+  `leadStatus` tinytext COLLATE utf8mb4_unicode_ci,
+  `consumerChannel` tinytext COLLATE utf8mb4_unicode_ci,
+  `acaApproval` tinytext COLLATE utf8mb4_unicode_ci,
+  `piStatus` tinytext COLLATE utf8mb4_unicode_ci,
+  `activePiStatus` tinytext COLLATE utf8mb4_unicode_ci,
+  `piStatusId` tinyint(4) DEFAULT '1',
+  `acfiAmount` tinytext COLLATE utf8mb4_unicode_ci,
+  `placementTimeline` tinytext COLLATE utf8mb4_unicode_ci,
+  `campaign` tinytext COLLATE utf8mb4_unicode_ci,
+  `financialCapacity` tinytext COLLATE utf8mb4_unicode_ci,
+  `typeOfCare` tinytext COLLATE utf8mb4_unicode_ci,
+  `cao` tinytext COLLATE utf8mb4_unicode_ci,
+  `psName` tinytext COLLATE utf8mb4_unicode_ci,
+  `referralCodeStatus` tinytext COLLATE utf8mb4_unicode_ci,
+  `residentDob` tinytext COLLATE utf8mb4_unicode_ci,
+  `state` tinytext COLLATE utf8mb4_unicode_ci,
+  `notes` text COLLATE utf8mb4_unicode_ci,
+  `appInUse` tinytext COLLATE utf8mb4_unicode_ci,
+  `invoiceAmount` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `invoiceNumber` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `invoiceDate` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `isCloseCase` tinyint(1) DEFAULT '0',
+  `isDoNotContact` tinyint(1) DEFAULT '0',
+  `isPlaced` tinyint(1) DEFAULT '0',
+  `isPsReferral` tinyint(1) DEFAULT '0' COMMENT 'Property Solutions Referral',
+  `active` tinyint(1) DEFAULT '1',
+  `addedOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table acpp_info_hub_form
+# ------------------------------------------------------------
+
+CREATE TABLE `acpp_info_hub_form` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `formtype` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'show the different form type',
+  `contactName` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'contact name',
+  `contactNumber` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'contact number',
+  `timeframe` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'request a follow up call - select a timeframe',
+  `patientName` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'request a follow up call - patient name',
+  `contactEmail` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'request a follow up call - email',
+  `role` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'share a resource - Role',
+  `info` text COLLATE utf8mb4_unicode_ci COMMENT 'information',
+  `addedBy` int(11) DEFAULT NULL,
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `formtype` (`formtype`,`contactName`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table app_au_postcodes
+# ------------------------------------------------------------
+
+CREATE TABLE `app_au_postcodes` (
+  `id` int(11) DEFAULT NULL,
+  `countrycode` varchar(2) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `region1` varchar(48) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `region2` varchar(48) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `region3` varchar(48) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `postcode` varchar(4) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `locality` varchar(48) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `state` varchar(4) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `latitude` decimal(13,9) DEFAULT NULL,
+  `longitude` decimal(13,9) DEFAULT NULL,
+  `iso` varchar(48) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fips` varchar(48) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `hasc` varchar(48) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `stat` varchar(48) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `timezone` varchar(48) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `utc` varchar(48) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dst` varchar(48) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  KEY `INDEX` (`countrycode`,`postcode`,`state`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table app_au_unique_postcodes
+# ------------------------------------------------------------
+
+CREATE TABLE `app_au_unique_postcodes` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `countrycode` varchar(2) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `postcode` varchar(4) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `latitude` decimal(13,10) DEFAULT NULL,
+  `longitude` decimal(13,10) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`countrycode`,`postcode`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+
+# Dump of table app_ci_sessions
+# ------------------------------------------------------------
+
+CREATE TABLE `app_ci_sessions` (
+  `id` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `timestamp` int(10) unsigned NOT NULL DEFAULT '0',
+  `data` blob NOT NULL,
+  KEY `ci_sessions_timestamp` (`timestamp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table app_cs_submissions
+# ------------------------------------------------------------
+
+CREATE TABLE `app_cs_submissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `formData` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Serialized string of form data',
+  `formDataText` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Text version for Zendesk and Zapier',
+  `timeLine` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dataSource` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Source for data',
+  `senderName` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `senderPhone` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `senderEmail` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dateSubmitted` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `caseId` int(11) DEFAULT NULL,
+  `reportCode` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `active` tinyint(4) DEFAULT '1',
+  `last_modified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`dateSubmitted`,`caseId`,`reportCode`,`active`,`senderName`,`senderPhone`,`senderEmail`),
+  KEY `timeLine` (`timeLine`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table app_email_queues
+# ------------------------------------------------------------
+
+CREATE TABLE `app_email_queues` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `dateAdded` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `caseNumber` int(11) DEFAULT NULL,
+  `reportCode` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `recipientType` enum('CM','FP','Client') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emailType` enum('PI Alert','Options Report','CM Update','FP Update','Tour Booking','Message Update','Unknown') COLLATE utf8mb4_unicode_ci DEFAULT 'Unknown',
+  `recipientId` int(11) DEFAULT NULL,
+  `recipientName` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emailAddress` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emailSubject` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emailContent` text COLLATE utf8mb4_unicode_ci,
+  `emailCc` tinytext COLLATE utf8mb4_unicode_ci,
+  `emailBcc` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'support@agedcaredecisions.com.au',
+  `senderName` tinytext COLLATE utf8mb4_unicode_ci,
+  `senderEmail` tinytext COLLATE utf8mb4_unicode_ci,
+  `deliveryCount` tinyint(4) DEFAULT '0',
+  `deliveryStatus` enum('Pending','Delivered','Failed') COLLATE utf8mb4_unicode_ci DEFAULT 'Pending',
+  `LastDeliveryMessage` text COLLATE utf8mb4_unicode_ci,
+  `lastDeliveryAttempt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`caseNumber`,`reportCode`,`recipientId`,`emailAddress`,`deliveryCount`,`deliveryStatus`,`dateAdded`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table app_facility_reviews
+# ------------------------------------------------------------
+
+CREATE TABLE `app_facility_reviews` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `reportCode` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `facilityId` int(11) NOT NULL,
+  `information_star_review` decimal(10,2) NOT NULL,
+  `staff_star_review` decimal(10,2) NOT NULL,
+  `general_star_review` decimal(10,2) NOT NULL,
+  `overall_star_review` decimal(10,2) NOT NULL,
+  `user_comments` text COLLATE utf8mb4_unicode_ci,
+  `anon_post` tinyint(1) DEFAULT '0',
+  `is_active` tinyint(1) DEFAULT '1',
+  `date_added` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`reportCode`,`facilityId`,`anon_post`,`is_active`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table app_facility_tours
+# ------------------------------------------------------------
+
+CREATE TABLE `app_facility_tours` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `reportCode` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `caseNumber` int(11) DEFAULT NULL,
+  `facilityId` int(11) NOT NULL,
+  `facilityName` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `requested_datetime` timestamp NULL DEFAULT NULL,
+  `tourHash` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_message` text COLLATE utf8mb4_unicode_ci,
+  `tour_status` enum('none','requested','accepted','facility_rescheduled','client_rescheduled','client_cancelled','facility_cancelled') COLLATE utf8mb4_unicode_ci DEFAULT 'requested',
+  `date_added` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQUE_TOUR` (`reportCode`,`caseNumber`,`facilityId`),
+  KEY `INDEX` (`reportCode`,`facilityId`,`tour_status`,`is_active`,`tourHash`,`caseNumber`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+DELIMITER ;;
+/*!50003 SET SESSION SQL_MODE="NO_AUTO_VALUE_ON_ZERO" */;;
+/*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `app_facility_tours_before_insert` BEFORE INSERT ON `app_facility_tours` FOR EACH ROW BEGIN
+	WHILE (NEW.tourHash IS NULL OR NEW.tourHash = '' OR EXISTS(SELECT 1 FROM app_facility_tours WHERE tourHash = NEW.tourHash)) DO
+		SET NEW.tourHash = LOWER(GenerateRandomHash(32));  
+  	END WHILE;
+END */;;
+DELIMITER ;
+/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
+
+
+# Dump of table app_login_history
+# ------------------------------------------------------------
+
+CREATE TABLE `app_login_history` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `reportCode` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `caseNumber` int(11) DEFAULT NULL,
+  `userHash` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mobileNo` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ipAddress` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `date_added` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_modified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`reportCode`,`mobileNo`,`date_added`,`userHash`,`caseNumber`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table app_postcodes_geo
+# ------------------------------------------------------------
+
+CREATE TABLE `app_postcodes_geo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `postcode` smallint(4) unsigned zerofill NOT NULL,
+  `suburb` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `state` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `latitude` decimal(10,8) DEFAULT NULL,
+  `longitude` decimal(11,8) DEFAULT NULL,
+  `dc` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `addr_type` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `last_modified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`postcode`,`suburb`,`state`,`latitude`,`longitude`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table app_report_codes
+# ------------------------------------------------------------
+
+CREATE TABLE `app_report_codes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `reportId` int(11) NOT NULL,
+  `reportHash` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `caseId` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `reportCode` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rpcCode` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Residential Permanent Care code',
+  `rlcCode` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Residential Respite - Low Care code',
+  `rhcCode` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Residential Respite - High Care code',
+  `checkPlacementStatus` tinyint(4) DEFAULT '0',
+  `lastCheckDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  `created_on` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_modified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQUE` (`reportCode`),
+  UNIQUE KEY `reportHash` (`reportHash`),
+  KEY `INDEX` (`active`,`reportId`,`caseId`,`reportHash`),
+  KEY `referralCodes` (`rhcCode`,`rlcCode`,`rpcCode`),
+  KEY `lastCheckDate` (`lastCheckDate`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Unique report ID for the option reports';
+
+
+DELIMITER ;;
+/*!50003 SET SESSION SQL_MODE="NO_AUTO_VALUE_ON_ZERO" */;;
+/*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `app_report_codes_before_insert` BEFORE INSERT ON `app_report_codes` FOR EACH ROW BEGIN
+	WHILE (NEW.reportCode IS NULL OR NEW.reportCode = '' OR EXISTS(SELECT 1 FROM app_report_codes WHERE reportCode = NEW.reportCode)) DO
+		SET NEW.reportCode = GenerateRandomHash(6);  
+  	END WHILE;
+  	
+	WHILE (NEW.reportHash IS NULL OR NEW.reportHash = '' OR EXISTS(SELECT 1 FROM app_report_codes WHERE reportHash = NEW.reportHash)) DO
+		SET NEW.reportHash = GenerateRandomHash(32);  
+  	END WHILE;   
+END */;;
+DELIMITER ;
+/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
+
+
+# Dump of table app_user_favourites
+# ------------------------------------------------------------
+
+CREATE TABLE `app_user_favourites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `reportCode` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `facilityList` text COLLATE utf8mb4_unicode_ci,
+  `date_added` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`reportCode`,`is_active`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table app_user_message_list
+# ------------------------------------------------------------
+
+CREATE TABLE `app_user_message_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `reportCode` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `userHash` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `msgHash` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `facilityId` int(11) DEFAULT NULL,
+  `caseManagerId` int(11) DEFAULT NULL,
+  `date_added` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_viewed` tinyint(1) DEFAULT '0',
+  `recipient_viewed` tinyint(1) DEFAULT '0',
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`reportCode`,`date_added`,`is_active`,`userHash`,`facilityId`,`caseManagerId`,`msgHash`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+DELIMITER ;;
+/*!50003 SET SESSION SQL_MODE="NO_AUTO_VALUE_ON_ZERO" */;;
+/*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `app_user_message_list_before_insert` BEFORE INSERT ON `app_user_message_list` FOR EACH ROW BEGIN
+	WHILE (NEW.msgHash IS NULL OR NEW.msgHash = '' OR EXISTS(SELECT 1 FROM app_user_message_list WHERE msgHash = NEW.msgHash)) DO
+		SET NEW.msgHash = LOWER(GenerateRandomHash(32));
+  	END WHILE;
+END */;;
+DELIMITER ;
+/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
+
+
+# Dump of table app_user_messages
+# ------------------------------------------------------------
+
+CREATE TABLE `app_user_messages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `messageId` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `caseNumber` int(11) DEFAULT NULL,
+  `clientName` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Client',
+  `recipientName` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'CM or Facility Name',
+  `messageType` enum('from','to') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `messageContent` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `date_added` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`messageId`,`date_added`,`is_active`,`caseNumber`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+
+# Dump of table app_users
+# ------------------------------------------------------------
+
+CREATE TABLE `app_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fbTokenId` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `devicePlatform` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deviceModel` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deviceId` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `userHash` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `reportCode` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `date_added` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `active` tinyint(4) DEFAULT '1',
+  `last_params` text COLLATE utf8mb4_unicode_ci,
+  `last_push` text COLLATE utf8mb4_unicode_ci,
+  `last_endpoint` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `endpoint_response` text COLLATE utf8mb4_unicode_ci,
+  `last_query` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `last_modified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `userHash` (`userHash`),
+  UNIQUE KEY `UNIQUE` (`fbTokenId`,`active`),
+  KEY `INDEX` (`active`,`deviceModel`,`deviceId`,`reportCode`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+DELIMITER ;;
+/*!50003 SET SESSION SQL_MODE="NO_AUTO_VALUE_ON_ZERO" */;;
+/*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `app_users_before_insert` BEFORE INSERT ON `app_users` FOR EACH ROW BEGIN
+	WHILE (NEW.userHash IS NULL OR NEW.userHash = '' OR EXISTS(SELECT 1 FROM app_users WHERE userHash = NEW.userHash)) DO
+		SET NEW.userHash = LOWER(GenerateRandomHash(32)); 
+  	END WHILE;
+END */;;
+DELIMITER ;
+/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
+
+
+# Dump of table login_attempts
+# ------------------------------------------------------------
+
+CREATE TABLE `login_attempts` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `login` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `time` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table postcodes_geo
+# ------------------------------------------------------------
+
+CREATE TABLE `postcodes_geo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `postcode` varchar(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `suburb` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `state` varchar(4) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `latitude` decimal(6,3) DEFAULT NULL,
+  `longitude` decimal(6,3) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table tbl_ad
+# ------------------------------------------------------------
+
+CREATE TABLE `tbl_ad` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `add_type` int(11) DEFAULT NULL,
+  `add_title` varchar(255) DEFAULT NULL,
+  `link` text,
+  `image` varchar(250) DEFAULT NULL,
+  `width` varchar(255) DEFAULT NULL,
+  `height` varchar(255) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `IsActive` enum('1','0') DEFAULT '1',
+  `views` int(30) DEFAULT NULL,
+  `clicks` varchar(255) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Dump of table tbl_business_listing
+# ------------------------------------------------------------
+
+CREATE TABLE `tbl_business_listing` (
+  `business_id` int(11) NOT NULL AUTO_INCREMENT,
+  `business_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `business_desc` mediumtext COLLATE utf8mb4_unicode_ci,
+  `operator_id` int(11) DEFAULT NULL,
+  `address1` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `suburb` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `state` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `postCode` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fax` varchar(60) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `website` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `logo` mediumtext COLLATE utf8mb4_unicode_ci,
+  `beds_avbl` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `Type` enum('0','1') COLLATE utf8mb4_unicode_ci DEFAULT '1' COMMENT '1-> Agedcare; 0-> Inhomecare',
+  `status` int(2) DEFAULT NULL COMMENT '1-> Active; 0-> Inactive',
+  `listing_type` int(2) DEFAULT NULL COMMENT '1-> Premium; 0-> Basic',
+  `featured` int(2) DEFAULT NULL COMMENT '1-> Yes; 0-> No',
+  `featured_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ID` int(11) DEFAULT NULL,
+  `encourage_review` tinyint(3) DEFAULT '0' COMMENT '2->Does not Encourage Review,1-> Encourage,0->Off',
+  `review_count` int(6) DEFAULT '0',
+  `meta_title` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_keywords` mediumtext COLLATE utf8mb4_unicode_ci,
+  `meta_description` mediumtext COLLATE utf8mb4_unicode_ci,
+  `Ispaid` int(30) DEFAULT NULL,
+  `slug` mediumtext COLLATE utf8mb4_unicode_ci,
+  `sticky` int(1) DEFAULT '0',
+  `lat` double DEFAULT NULL,
+  `lng` double DEFAULT NULL,
+  `mac_business_desc` longtext COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`business_id`),
+  KEY `business_name` (`business_name`,`suburb`,`state`,`postCode`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table tbl_cao_responsible
+# ------------------------------------------------------------
+
+CREATE TABLE `tbl_cao_responsible` (
+  `cao_manager_id` int(11) NOT NULL AUTO_INCREMENT,
+  `firstname` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `surname` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`cao_manager_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table tbl_case_manager
+# ------------------------------------------------------------
+
+CREATE TABLE `tbl_case_manager` (
+  `case_manager_id` int(11) NOT NULL AUTO_INCREMENT,
+  `firstname` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `surname` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`case_manager_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table tbl_cdusers
+# ------------------------------------------------------------
+
+CREATE TABLE `tbl_cdusers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(70) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` int(4) NOT NULL COMMENT '0=>Super Admin,1=>Case Manager,2=>Operator,3=>Provider Regular,4=>Provider View',
+  `email_pi_alerts` tinyint(4) DEFAULT '1',
+  `email_tours` tinyint(4) DEFAULT '1',
+  `email_messages` tinyint(4) DEFAULT '1',
+  `active` tinyint(3) NOT NULL,
+  `operator_id` mediumtext COLLATE utf8mb4_unicode_ci,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `parent_id` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `INDEX` (`email_pi_alerts`,`email_tours`,`email_messages`,`username`,`email`,`password`,`role`,`active`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table tbl_pi_alert
+# ------------------------------------------------------------
+
+CREATE TABLE `tbl_pi_alert` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `placement_introduction_id` int(11) NOT NULL,
+  `placement_recipient_id` int(11) NOT NULL,
+  `case_no` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `placement_alert_notes` mediumtext COLLATE utf8mb4_unicode_ci,
+  `date` datetime NOT NULL,
+  `placement_id` int(11) DEFAULT NULL,
+  `case_manager_id` int(11) DEFAULT NULL,
+  `interested` int(11) DEFAULT NULL,
+  `notinterested` int(11) DEFAULT NULL,
+  `client_interested_tour` int(11) DEFAULT NULL,
+  `not_suitable` int(11) DEFAULT NULL,
+  `invite_tour` int(11) DEFAULT NULL,
+  `contacted_family` int(11) DEFAULT NULL,
+  `need_more_info` int(11) DEFAULT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `published` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `placement_introduction_id` (`placement_introduction_id`),
+  KEY `case_no` (`case_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table tbl_placement_details
+# ------------------------------------------------------------
+
+CREATE TABLE `tbl_placement_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `placement_recipient_id` int(11) NOT NULL,
+  `placement_id` int(11) DEFAULT NULL,
+  `placement_id_notes` text,
+  `placement_id_about` text NOT NULL,
+  `case_manager_notes` text,
+  `care_needs_preferences` text,
+  `interested` int(11) DEFAULT NULL,
+  `notinterested` int(11) DEFAULT NULL,
+  `request_tour` int(11) DEFAULT NULL,
+  `match_budget` varchar(10) DEFAULT NULL,
+  `match_location` varchar(10) DEFAULT NULL,
+  `match_room_pref` varchar(10) DEFAULT NULL,
+  `match_specific_care` varchar(10) DEFAULT NULL,
+  `match_other_pref` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Dump of table tbl_placement_introduction
+# ------------------------------------------------------------
+
+CREATE TABLE `tbl_placement_introduction` (
+  `placement_recipient_id` int(11) NOT NULL AUTO_INCREMENT,
+  `placement_introduction_URL` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `case_manager_id` int(11) DEFAULT NULL,
+  `case_no` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `resident_firstname` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `resident_surname` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contactperson_firstname` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contactperson_surname` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `referral` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `display_rad` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `partially_supported` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `secure` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dementia` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ethnic` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `request_more_options` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pi_type` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cao_responsible` int(11) DEFAULT NULL,
+  `first_call_date` datetime DEFAULT NULL,
+  `first_call_duration` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `second_cm_call_date` datetime DEFAULT NULL,
+  `resident_date_of_birth` datetime DEFAULT NULL,
+  `suburb_of_interest` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `best_time` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `referral_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `timeline` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `estimated_acfi_output` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `estimated_acfi_detail` mediumtext COLLATE utf8mb4_unicode_ci,
+  `beacon` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `rad_capacity` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `introText` mediumtext COLLATE utf8mb4_unicode_ci,
+  `nextStepsText` mediumtext COLLATE utf8mb4_unicode_ci,
+  `type_of_care` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `current_location` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `relationship` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `published` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`placement_recipient_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table tbl_placement_recipient
+# ------------------------------------------------------------
+
+CREATE TABLE `tbl_placement_recipient` (
+  `placement_recipient_id` int(11) NOT NULL AUTO_INCREMENT,
+  `business_id` int(11) NOT NULL,
+  `business_name` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `operator_id` int(11) NOT NULL,
+  `vacancy_update_date` datetime DEFAULT NULL,
+  `vacancy_update_checkdigit` varchar(8) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `operator_name` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address1` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `suburb` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `state` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `postcode` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `website` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contactperson_firstname` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contactperson_surname` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contactperson_phone` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contactperson_email` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `single_room_private_ensuite_RADMin` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `single_room_private_ensuite_RADMax` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `single_room_shared_ensuite_RADMin` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `single_room_shared_ensuite_RADMax` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shared_RADMin` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shared_RADMax` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `no_of_beds_description` mediumtext COLLATE utf8mb4_unicode_ci,
+  `no_of_beds` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `about_this_facility` mediumtext COLLATE utf8mb4_unicode_ci,
+  `info_pack_url` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `specialist_services` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vacancy_update` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fac_image` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `high_care` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `low_care` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dementia` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `concessional` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `rad_only` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `respite` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pets_allowed` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `palliative` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `couples_room` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `secure_dementia` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ethnic` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `notification_email_1` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `notification_email_2` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `notification_email_3` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `notification_email_4` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `latitude` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `longitude` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `single_private_ensuite_available` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `single_shared_ensuite_available` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shared_available` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `secure_garden` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cafe` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `hairdressing` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pets_on_premises` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `smokers_permitted` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `chapel` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `short_term_ndis` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ethnic_non_speaking` mediumtext COLLATE utf8mb4_unicode_ci,
+  `active` int(2) DEFAULT NULL,
+  `vacancy_single` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vacancy_shared` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vacancy_respite` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vacancy_secure_dementia` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vacancy_supported` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vacancy_rad` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vacancy_notes` mediumtext COLLATE utf8mb4_unicode_ci,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`placement_recipient_id`),
+  KEY `business_id` (`business_id`),
+  KEY `operator_id` (`operator_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table tbl_reviews_master
+# ------------------------------------------------------------
+
+CREATE TABLE `tbl_reviews_master` (
+  `review_id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_id` int(11) DEFAULT NULL,
+  `member_username` varchar(255) DEFAULT NULL,
+  `business_id` int(11) DEFAULT NULL,
+  `type` enum('I','R','S') DEFAULT NULL,
+  `text` longtext,
+  `quality_information` int(2) DEFAULT '0',
+  `helpfulness` int(2) DEFAULT '0',
+  `quality_ambiance` int(2) DEFAULT '0',
+  `quality_building` int(2) DEFAULT '0',
+  `quality_staff` int(2) DEFAULT '0',
+  `quality_food` int(2) DEFAULT '0',
+  `quality_lifestyle` int(2) DEFAULT '0',
+  `quality_service` int(2) DEFAULT '0',
+  `responsiveness` int(2) DEFAULT '0',
+  `overall_quality` int(2) DEFAULT '0',
+  `date_posted` datetime DEFAULT NULL,
+  `ip_posted_from` varchar(100) DEFAULT NULL,
+  `approved_by` int(11) DEFAULT NULL COMMENT 'adminuserid',
+  `isSpam` int(2) DEFAULT '0' COMMENT '0=>not spam, 1=>spam',
+  `isActive` int(3) DEFAULT '1',
+  `emailSent` int(1) DEFAULT '0',
+  `referrer` varchar(255) DEFAULT NULL,
+  `helpful` int(255) DEFAULT NULL,
+  `nps_score` int(255) DEFAULT NULL,
+  `source` int(1) DEFAULT '0' COMMENT '0=> website, 1=> paper',
+  `date_received` int(255) DEFAULT NULL COMMENT 'timestamp',
+  `image` varchar(255) DEFAULT NULL,
+  `admin_note` text,
+  `spam_reason` varchar(255) DEFAULT NULL,
+  `archive` int(11) DEFAULT '0',
+  PRIMARY KEY (`review_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+
+--
+-- Dumping routines (FUNCTION) for database 'agedcare_db'
+--
+DELIMITER ;;
+
+# Dump of FUNCTION CheckYesNo
+# ------------------------------------------------------------
+
+/*!50003 SET SESSION SQL_MODE="NO_AUTO_VALUE_ON_ZERO"*/;;
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 FUNCTION `CheckYesNo`(
+	`InputValue` CHAR(100)
+) RETURNS tinyint(4)
+BEGIN
+    IF (inputValue LIKE '%yes%')
+    THEN
+      RETURN 1;
+    ELSE
+      RETURN 0;
+    END IF;
+END */;;
+
+/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;;
+# Dump of FUNCTION GenerateRandomHash
+# ------------------------------------------------------------
+
+/*!50003 SET SESSION SQL_MODE="NO_AUTO_VALUE_ON_ZERO"*/;;
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 FUNCTION `GenerateRandomHash`(
+	`length` SMALLINT(10)
+
+) RETURNS varchar(100) CHARSET utf8mb4
+BEGIN
+    SET @returnStr = '';
+    SET @allowedChars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    SET @i = 0;
+
+    WHILE (@i < length) DO
+        SET @returnStr = CONCAT(@returnStr, substring(@allowedChars, FLOOR(RAND() * LENGTH(@allowedChars) + 1), 1));
+        SET @i = @i + 1;
+    END WHILE;
+
+    RETURN @returnStr;
+END */;;
+
+/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;;
+# Dump of FUNCTION GenerateRandomNumber
+# ------------------------------------------------------------
+
+/*!50003 SET SESSION SQL_MODE="NO_AUTO_VALUE_ON_ZERO"*/;;
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 FUNCTION `GenerateRandomNumber`(
+	`length` TINYINT
+) RETURNS varchar(100) CHARSET utf8mb4
+BEGIN
+    SET @returnStr = '';
+    SET @allowedChars = '1234567890';
+    SET @i = 0;
+
+    WHILE (@i < length) DO
+        SET @returnStr = CONCAT(@returnStr, substring(@allowedChars, FLOOR(RAND() * LENGTH(@allowedChars) + 1), 1));
+        SET @i = @i + 1;
+    END WHILE;
+
+    RETURN @returnStr;
+END */;;
+
+/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;;
+# Dump of FUNCTION IsNumeric
+# ------------------------------------------------------------
+
+/*!50003 SET SESSION SQL_MODE="NO_AUTO_VALUE_ON_ZERO"*/;;
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 FUNCTION `IsNumeric`(
+	`inputValue` VARCHAR(100)
+) RETURNS tinyint(4)
+BEGIN
+    IF (inputValue REGEXP ('^(-|\\+){0,1}([0-9]+\\.[0-9]*|[0-9]*\\.[0-9]+|[0-9]+)$'))
+    THEN
+      RETURN 1;
+    ELSE
+      RETURN 0;
+    END IF;
+END */;;
+
+/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;;
+# Dump of FUNCTION ProperCase
+# ------------------------------------------------------------
+
+/*!50003 SET SESSION SQL_MODE="NO_AUTO_VALUE_ON_ZERO"*/;;
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 FUNCTION `ProperCase`(
+	`str` VARCHAR(128)
+) RETURNS varchar(128) CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci
+BEGIN
+DECLARE n, pos INT DEFAULT 1;
+DECLARE sub, proper VARCHAR(128) DEFAULT '';
+
+IF length(trim(str)) > 0 THEN
+	WHILE pos > 0 DO
+		SET pos = LOCATE(' ',TRIM(str),n);
+		IF pos = 0 THEN
+		   SET sub = LOWER(TRIM(SUBSTR(TRIM(str),n)));
+		ELSE
+		   SET sub = LOWER(TRIM(SUBSTR(TRIM(str),n,pos-n)));
+		END IF;
+		
+		SET proper = CONCAT_WS(' ', proper, CONCAT(UPPER(LEFT(sub,1)),SUBSTR(sub,2)));
+  SET n = pos + 1;
+	END WHILE;
+END IF;
+
+RETURN trim(proper);
+END */;;
+
+/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;;
+# Dump of FUNCTION SplitStr
+# ------------------------------------------------------------
+
+/*!50003 SET SESSION SQL_MODE="NO_AUTO_VALUE_ON_ZERO"*/;;
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 FUNCTION `SplitStr`(
+	`str` VARCHAR(10),
+	`delim` VARCHAR(5),
+	`pos` TINYINT
+) RETURNS varchar(10) CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci
+BEGIN
+	RETURN REPLACE(SUBSTRING(SUBSTRING_INDEX(str, delim, pos),
+   LENGTH(SUBSTRING_INDEX(str, delim, pos-1)) + 1),
+   delim, '') + 1;
+END */;;
+
+/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;;
+DELIMITER ;
+
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
